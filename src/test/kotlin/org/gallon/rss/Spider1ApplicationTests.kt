@@ -1,4 +1,4 @@
-package org.gallon.spider1
+package org.gallon.rss
 
 import org.junit.Test
 import org.junit.runner.RunWith

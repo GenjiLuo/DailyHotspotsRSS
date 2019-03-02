@@ -1,4 +1,4 @@
-package org.gallon.spider1.controller
+package org.gallon.rss.controller
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

@@ -1,4 +1,4 @@
-package org.gallon.spider1
+package org.gallon.rss
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
