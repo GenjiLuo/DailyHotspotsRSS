@@ -2,10 +2,12 @@ package org.gallon.rss
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.stereotype.Component
 
 @SpringBootApplication
-class Spider1Application
+class SpiderApplication
 
 fun main(args: Array<String>) {
-	runApplication<Spider1Application>(*args)
+	runApplication<SpiderApplication>(*args)
 }
