@@ -1,4 +1,4 @@
-package org.gallon.rss.controller
+package org.gallon.rss.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableScheduling

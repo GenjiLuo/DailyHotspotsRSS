@@ -5,13 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping
-class TestAction() {
+class StatAction {
 
-    @GetMapping("test")
+    @GetMapping("status")
     fun test(): String {
-        println("test")
-        return "test ok"
+        return "status: online"
     }
 
 }
