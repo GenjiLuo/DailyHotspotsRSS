@@ -166,6 +166,20 @@ public class FastNews {
       public void setWeburl(String weburl) {
         this.weburl = weburl;
       }
+
+      @Override
+      public String toString() {
+        return "ListBean{" +
+                "title='" + title + '\'' +
+                ", time='" + time + '\'' +
+                ", src='" + src + '\'' +
+                ", category='" + category + '\'' +
+                ", pic='" + pic + '\'' +
+                ", content='" + content + '\'' +
+                ", url='" + url + '\'' +
+                ", weburl='" + weburl + '\'' +
+                '}';
+      }
     }
   }
 }
