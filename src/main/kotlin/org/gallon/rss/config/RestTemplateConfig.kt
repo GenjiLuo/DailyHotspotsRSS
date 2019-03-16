@@ -14,6 +14,7 @@ class RestTemplateConfig {
   fun restTemplate(): RestTemplate {
     val restTemplate = RestTemplate()
     restTemplate.requestFactory = SimpleClientHttpRequestFactory().apply { setOutputStreaming(false) }
+    restTemplate.errorHandler = ThrowErrorHandler()
     return restTemplate
   }
 
