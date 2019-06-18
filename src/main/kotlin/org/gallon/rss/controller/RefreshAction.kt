@@ -27,8 +27,8 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
     fun baidutop(usage: Int?): JsonResult {
         Spider.create(BaiduTopProcessor(usage))
                 .setDownloader(HttpClientDownloader())
-                .addUrl("https://top.baidu.com/buzz?b=341") //今日热点
-//                .addUrl("https://top.baidu.com/buzz?b=1") //实时热点
+//                .addUrl("https://top.baidu.com/buzz?b=341") //今日热点
+                .addUrl("https://top.baidu.com/buzz?b=1") //实时热点
                 .addPipeline(baiduTopPipeline)
                 .thread(1)
                 .run()
@@ -37,7 +37,7 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
 
     @GetMapping("jisu")
     fun xinlang(usage: Int?): String {
-        val body = restTemplate.getForEntity("http://api.jisuapi.com/news/get?channel=头条&start=0&num=10&appkey=c46797350d31f9c0", String::class.java).body ?: return "failed"
+        val body = restTemplate.getForEntity("https://api.jisuapi.com/news/get?channel=头条&start=0&num=10&appkey=c46797350d31f9c0", String::class.java).body ?: return "failed"
         val fastNews = Gson().fromJson(body, FastNews::class.java)
         var count = 0
         val rss = RSS()

@@ -18,12 +18,13 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.phantomjs.PhantomJSDriver
+import us.codecraft.webmagic.pipeline.ConsolePipeline
 import java.io.File
 import java.io.FileOutputStream
 import java.io.FileWriter
 
 
-class BaiduTopProcessor(val usage: Int?): PageProcessor {
+class GeekParkProcessor(val usage: Int?): PageProcessor {
 
     private val result = ArrayList<BaiduTop>()
     private val list = ArrayList<String>()
@@ -37,21 +38,13 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
     }
 
     override fun process(page: Page) {
-        val list_table = page.html.css("table.list-table")
-        if (list_table.toString() != null) {
-            topBaidu(page)
-        } else {
-            baiduDetail(page)
-        }
-    }
-
-    private fun baiduDetail(page: Page) {
-//        println("html: " + page.html)
+        println("html: " + page.html)
         val compile = Pattern.compile(".*?<h3 class=\"c-title\"> <a href=\"(.*?)\".*?" +
                 "\"_blank\">(.*?)</a>", Pattern.DOTALL)
         val matcher = compile.matcher(page.html.toString())
         matcher.run {
             while (find()) {
+                println("detail url:" + group(2).replace("<em>", "").replace("</em>", ""))
                 list.add(group(2).replace(Regex(Const.REGEX_IGNORE_2), ""))
 //                val driver = PhantomJSDriver()
 ////                val driver = ChromeDriver()
@@ -69,9 +62,7 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
         synchronized(this) {
             if (++count == 20) {
                 result.forEachIndexed { index, baiduTop ->
-                    if (list.size > index) {
-                        baiduTop.keywords = list[index].trim()
-                    }
+                    baiduTop.keywords = list[index].trim()
                     println(baiduTop)
                 }
                 list.forEachIndexed { index, s ->
@@ -83,38 +74,13 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
         }
     }
 
-    private fun topBaidu(page: Page) {
-        val list_table = page.html.css("table.list-table")
-//        println("table.list-table:\n" + list_table)
-        val compile = Pattern.compile(".*?(top|normal)\">(.*?)<.*?" +
-                "href=\"(.*?)\".*?" +
-                ">(.*?)<.*?" +
-                "class=\"tc\".*?href=\"(.*?)\".*?" +
-                "(rise|fall)\">(.*?)<.*?", Pattern.DOTALL)
-        var count = 0
-        val matcher = compile.matcher(list_table.toString())
-        matcher.run {
-            while (find()) {
-                val top = BaiduTop(num = group(2).toInt(),
-                        keywords = group(4),
-                        url = group(5).replace(Const.REGEX_IGNORE_1, ""),
-                        rise = group(7).toInt())
-                result.add(top)
-                println(top.num.toString() + "、" + top.keywords)
-                page.addTargetRequest(top.url)
-                if (++count == 20) break
-            }
-        }
-    }
-
 }
 
 fun main(args: Array<String>) {
     Spider.create(BaiduTopProcessor(RSS.USAGE_TEST))
             .setDownloader(HttpClientDownloader())
-//            .addUrl("https://top.baidu.com/buzz?b=341") //今日热点
-            .addUrl("https://top.baidu.com/buzz?b=1") //实时热点
-            .addPipeline(BaiduTopPipeline())
+            .addUrl("http://www.geekpark.net/breakingnews")
+            .addPipeline(ConsolePipeline())
             .thread(1)
             .run()
 }

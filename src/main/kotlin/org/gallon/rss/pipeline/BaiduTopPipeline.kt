@@ -19,7 +19,7 @@ class BaiduTopPipeline: Pipeline {
 
     override fun process(resultItems: ResultItems, task: Task) {
         val list = resultItems.get<List<BaiduTop>>("result") ?: return
-        println("resultItems.result: " + resultItems.get("result"))
+//        println("resultItems.result: " + resultItems.get("result"))
         val usage = resultItems.get<Int>("usage") ?: RSS.USAGE_TEST
         val rss = RSS()
         rss.src = RSS.SRC_BAIDUTOP
