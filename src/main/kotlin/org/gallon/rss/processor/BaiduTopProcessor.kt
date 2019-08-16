@@ -110,13 +110,3 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
     }
 
 }
-
-fun main(args: Array<String>) {
-    Spider.create(BaiduTopProcessor(RSS.USAGE_TEST))
-            .setDownloader(HttpClientDownloader())
-//            .addUrl("https://top.baidu.com/buzz?b=341") //今日热点
-            .addUrl("https://top.baidu.com/buzz?b=1") //实时热点
-            .addPipeline(BaiduTopPipeline())
-            .thread(1)
-            .run()
-}

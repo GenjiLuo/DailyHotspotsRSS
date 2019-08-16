@@ -28,11 +28,3 @@ class GithubRepoPageProcessor: PageProcessor {
 
 
 }
-
-fun main(args: Array<String>) {
-    Spider.create(GithubRepoPageProcessor())
-            .setDownloader(HttpClientDownloader())
-            .addUrl("https://github.com/code4craft")
-            .thread(2)
-            .run()
-}
