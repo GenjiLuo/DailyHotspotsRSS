@@ -75,12 +75,3 @@ class GeekParkProcessor(val usage: Int?): PageProcessor {
     }
 
 }
-
-fun main(args: Array<String>) {
-    Spider.create(BaiduTopProcessor(RSS.USAGE_TEST))
-            .setDownloader(HttpClientDownloader())
-            .addUrl("http://www.geekpark.net/breakingnews")
-            .addPipeline(ConsolePipeline())
-            .thread(1)
-            .run()
-}

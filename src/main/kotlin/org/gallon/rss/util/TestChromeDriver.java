@@ -31,36 +31,36 @@ public class TestChromeDriver {
         return new RemoteWebDriver(service.getUrl(), DesiredCapabilities.chrome());
     }
 
-    public static void main(String[] args) throws IOException {
-
-        WebDriver driver = TestChromeDriver.getChromeDriver();
-        // 让浏览器访问 Baidu
-        driver.get("https://www.taobao.com/");
-        // 用下面代码也可以实现
-        //driver.navigate().to("http://www.baidu.com");
-        // 获取 网页的 title
-        System.out.println(" Page title is: " +driver.getTitle());
-        // 通过 id 找到 input 的 DOM
-        WebElement element =driver.findElement(By.id("q"));
-        // 输入关键字
-        element.sendKeys("东鹏瓷砖");
-        // 提交 input 所在的 form
-        element.submit();
-        // 通过判断 title 内容等待搜索页面加载完毕，间隔秒
-        new WebDriverWait(driver, 10);
-//                .until(new ExpectedCondition() {
-//            @Override
-//            public Object apply(Object input) {
-//                return ((WebDriver)input).getTitle().toLowerCase().startsWith("东鹏瓷砖");
-//            }
-//        });
-        // 显示搜索结果页面的 title
-        System.out.println(" Page title is: " +driver.getTitle());
-        // 关闭浏览器
-        driver.quit();
-        // 关闭 ChromeDriver 接口
-        service.stop();
-    }
+//    public static void main(String[] args) throws IOException {
+//
+//        WebDriver driver = TestChromeDriver.getChromeDriver();
+//        // 让浏览器访问 Baidu
+//        driver.get("https://www.taobao.com/");
+//        // 用下面代码也可以实现
+//        //driver.navigate().to("http://www.baidu.com");
+//        // 获取 网页的 title
+//        System.out.println(" Page title is: " +driver.getTitle());
+//        // 通过 id 找到 input 的 DOM
+//        WebElement element =driver.findElement(By.id("q"));
+//        // 输入关键字
+//        element.sendKeys("东鹏瓷砖");
+//        // 提交 input 所在的 form
+//        element.submit();
+//        // 通过判断 title 内容等待搜索页面加载完毕，间隔秒
+//        new WebDriverWait(driver, 10);
+////                .until(new ExpectedCondition() {
+////            @Override
+////            public Object apply(Object input) {
+////                return ((WebDriver)input).getTitle().toLowerCase().startsWith("东鹏瓷砖");
+////            }
+////        });
+//        // 显示搜索结果页面的 title
+//        System.out.println(" Page title is: " +driver.getTitle());
+//        // 关闭浏览器
+//        driver.quit();
+//        // 关闭 ChromeDriver 接口
+//        service.stop();
+//    }
 
 
 
