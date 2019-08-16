@@ -1,5 +1,6 @@
 package org.gallon.rss.processor
 
+import org.gallon.rss.controller.RefreshAction
 import org.gallon.rss.downloader.HttpClientDownloader
 import org.gallon.rss.entity.BaiduTop
 import org.gallon.rss.entity.mongo.RSS
@@ -67,7 +68,7 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
             }
         }
         synchronized(this) {
-            if (++count == 20) {
+            if (++count == 15) {
                 result.forEachIndexed { index, baiduTop ->
                     if (list.size > index) {
                         baiduTop.keywords = list[index].trim()
@@ -76,6 +77,7 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
                 }
                 list.forEachIndexed { index, s ->
                     println((index + 1).toString() + "、" + s)
+                    RefreshAction.baidutop += (index + 1).toString() + "、" + s + "\n"
                 }
                 page.putField("result", result)
                 page.putField("usage", usage?:RSS.USAGE_TEST)
@@ -102,7 +104,7 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
                 result.add(top)
                 println(top.num.toString() + "、" + top.keywords)
                 page.addTargetRequest(top.url)
-                if (++count == 20) break
+                if (++count == 15) break
             }
         }
     }

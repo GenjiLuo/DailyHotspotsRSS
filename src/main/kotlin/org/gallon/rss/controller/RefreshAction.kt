@@ -23,8 +23,13 @@ import java.util.*
 class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemplate,
                     val baiduTopPipeline: BaiduTopPipeline) {
 
+    companion object {
+        var baidutop: String = ""
+    }
+
     @GetMapping("baidutop")
-    fun baidutop(usage: Int?): JsonResult {
+    fun baidutop(usage: Int?): String {
+        baidutop = ""
         Spider.create(BaiduTopProcessor(usage))
                 .setDownloader(HttpClientDownloader())
 //                .addUrl("https://top.baidu.com/buzz?b=341") //今日热点
@@ -32,7 +37,7 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
                 .addPipeline(baiduTopPipeline)
                 .thread(1)
                 .run()
-        return JsonResult(data = "baidutop refresh done " + Date())
+        return baidutop
     }
 
     @GetMapping("jisu")
@@ -43,6 +48,7 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
         val rss = RSS()
         rss.src = RSS.SRC_XINLANG
         rss.usage = if (usage != null) usage else RSS.USAGE_TEST
+        val sb = StringBuilder()
         fastNews!!.result.list.forEach {
             val article = Article()
             article.title = it.title.replace(Regex(Const.REGEX_IGNORE_2), "")
@@ -56,9 +62,10 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
             rss.list.add(article)
             count++
             println(count.toString() + "、" + article.title)
+            sb.append(count).append("、").append(article.title).append("\n")
         }
         mongoTemplate.save(rss)
-        return "jisu refresh done " + Date()
+        return sb.toString()
     }
 
 }
