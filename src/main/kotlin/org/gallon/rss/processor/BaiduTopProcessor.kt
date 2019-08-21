@@ -77,7 +77,7 @@ class BaiduTopProcessor(val usage: Int?): PageProcessor {
                 }
                 list.forEachIndexed { index, s ->
                     println((index + 1).toString() + "、" + s)
-                    RefreshAction.baidutop += (index + 1).toString() + "、" + s + "\n"
+                    RefreshAction.baidutop += (index + 1).toString() + "、" + s + "<br/>"
                 }
                 page.putField("result", result)
                 page.putField("usage", usage?:RSS.USAGE_TEST)

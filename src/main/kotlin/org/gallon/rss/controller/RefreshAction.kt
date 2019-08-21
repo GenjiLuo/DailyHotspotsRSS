@@ -62,7 +62,7 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
             rss.list.add(article)
             count++
             println(count.toString() + "、" + article.title)
-            sb.append(count).append("、").append(article.title).append("\n")
+            sb.append(count).append("、").append(article.title).append("<br/>")
         }
         mongoTemplate.save(rss)
         return sb.toString()
