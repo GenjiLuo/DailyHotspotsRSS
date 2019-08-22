@@ -27,6 +27,15 @@ class RefreshAction(val restTemplate: RestTemplate, val mongoTemplate: MongoTemp
         var baidutop: String = ""
     }
 
+    @GetMapping("template")
+    fun template(usage: Int?): String {
+        val sb = StringBuilder()
+        sb.append("百度top：").append("<br/>").append(baidutop(usage))
+                .append("<br/>")
+                .append("新浪top：").append("<br/>").append(xinlang(usage))
+        return sb.toString()
+    }
+
     @GetMapping("baidutop")
     fun baidutop(usage: Int?): String {
         baidutop = ""
